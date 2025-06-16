@@ -13,9 +13,14 @@ func UpdateQuality(items []*Item) {
 		items[i].SellIn = items[i].SellIn - 1
 
 		if items[i].Name != "Aged Brie" && items[i].Name != "Backstage passes to a TAFKAL80ETC concert" {
-			if items[i].Quality > 0 {
+			items[i].Quality = items[i].Quality - 1
+			if items[i].SellIn < 0 {
 				items[i].Quality = items[i].Quality - 1
 			}
+			if items[i].Quality < 0 {
+				items[i].Quality = 0
+			}
+
 		} else {
 			if items[i].Quality < 50 {
 				items[i].Quality = items[i].Quality + 1
@@ -35,20 +40,15 @@ func UpdateQuality(items []*Item) {
 		}
 
 		if items[i].SellIn < 0 {
-			if items[i].Name != "Aged Brie" {
-				if items[i].Name != "Backstage passes to a TAFKAL80ETC concert" {
-					if items[i].Quality > 0 {
-						items[i].Quality = items[i].Quality - 1
-					}
-				} else {
-					items[i].Quality = items[i].Quality - items[i].Quality
-				}
-			} else {
+			if items[i].Name == "Backstage passes to a TAFKAL80ETC concert" {
+				items[i].Quality = items[i].Quality - items[i].Quality
+			}
+			if items[i].Name == "Aged Brie" {
 				if items[i].Quality < 50 {
 					items[i].Quality = items[i].Quality + 1
 				}
 			}
+
 		}
 	}
-
 }
